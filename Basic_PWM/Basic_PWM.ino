@@ -8,7 +8,7 @@
   W. Newhall 5/2023 (original version)
 */
 
-#define PWM_OUTPUT_PIN    10
+#define PWM_OUTPUT_PIN    10        // This will be the pin for the PWM output signal
 
 // This code runs once at startup
 void setup() {
