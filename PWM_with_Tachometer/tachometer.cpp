@@ -44,10 +44,12 @@ Tachometer::Tachometer(int num_prop_blades, int blade_sensor_pin) {
 // Populates avg_blade_period_us_ with latest value
 float Tachometer::GetAvgBladePeriod(void) {
   int n;
-  unsigned long avg_blade_period_us = 0;        // Average blade period result (us)
-  unsigned long time_since_last_blade_us;       // Time since previous blade crossing (us)
-  unsigned long current_time_us;
+  unsigned long blade_period_sum_us;              // Sum of blade periods to calculate average (us)
+  unsigned long time_since_last_blade_us;         // Time since previous blade crossing (us)
+  unsigned long current_time_us;                  // Stores current time (us)
   unsigned long local_previous_blade_crossing_us; // Get prev cross time first so that it won't change if interrupt during this function
+
+  blade_period_sum_us = 0;  // Reset sum to zero
 
   // If a blade has not crossed the sensor in MAX_BLADE_TIME us, then consider
   // the blade period to be zero.
@@ -56,9 +58,9 @@ float Tachometer::GetAvgBladePeriod(void) {
   time_since_last_blade_us = current_time_us - local_previous_blade_crossing_us;
   if(time_since_last_blade_us <= max_blade_time_us_) {
     for(n=0; n<BLADE_PER_NUM_AVG; n++) {          // Loop through all the values to average
-      avg_blade_period_us_ += blade_period_us[n];  // Sum all the values to average
+      blade_period_sum_us += blade_period_us[n];  // Sum all the values to average
     }
-    avg_blade_period_us_ = avg_blade_period_us_ / (float)BLADE_PER_NUM_AVG;  // Calculate the average
+    avg_blade_period_us_ = (float)blade_period_sum_us / (float)BLADE_PER_NUM_AVG;  // Calculate the average
   }
   else {
     avg_blade_period_us_ = 0;  // Consider blade period to be zero
