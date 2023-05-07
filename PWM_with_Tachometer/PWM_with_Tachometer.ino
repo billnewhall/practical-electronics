@@ -9,7 +9,7 @@
 */
 
 #define PWM_OUTPUT_PIN    10      // This is the pin to output PWM
-#define BLADE_SENSOR_PIN  13      // Pin on which to detect interrupt for blade IR sensor
+#define BLADE_SENSOR_PIN  2       // Pin on which to detect interrupt for blade IR sensor
 #define NUM_PROP_BLADES   3       // Number of blades per prop
 
 #include "tachometer.h"           // Implements a tachometer
