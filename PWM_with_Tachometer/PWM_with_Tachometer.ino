@@ -29,6 +29,7 @@ void loop() {
   long int avg_blade_period_us;
   float freq_Hz;        // Frequency of blades crossing sensor (Hz)
   float tachometer_rpm; // Rotational speed (rpm)
+  PropSpeed prop_speed; // Structure for holding prop speed data
 
   // Show a prompt and get user input
   while (Serial.available() == 0) { } // Wait until user enters a duty cycle value
@@ -38,13 +39,11 @@ void loop() {
   analogWrite(PWM_OUTPUT_PIN, duty_cycle );
 
   while (Serial.available() == 0) { // Wait until user hits enter
-    avg_blade_period_us = Tach.GetAvgBladePeriod(); // Get the average blade period
-    freq_Hz = Tach.GetFreq();       // Get the blade frequency
-    tachometer_rpm = Tach.GetRpm(); // Get the RPM
+    prop_speed = Tach.GetPropSpeed();
     Serial.print("Duty Cycle (0-255): "); Serial.print(duty_cycle); Serial.print(", ");
-    Serial.print("Period: "); Serial.print(avg_blade_period_us); Serial.print(" us, ");
-    Serial.print("Frequency: "); Serial.print(freq_Hz); Serial.print(" Hz, ");
-    Serial.print("Tachometer: "); Serial.print(tachometer_rpm, 0); Serial.print(" RPM");
+    Serial.print("Period: "); Serial.print(prop_speed.blade_period_us); Serial.print(" us, ");
+    Serial.print("Frequency: "); Serial.print(prop_speed.blade_freq_hz); Serial.print(" Hz, ");
+    Serial.print("Tachometer: "); Serial.print(prop_speed.rpm, 0); Serial.print(" RPM");
     Serial.println("");
 
     delay(250);
