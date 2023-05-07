@@ -63,11 +63,11 @@ void loop() {
   // THIS IS WHERE YOU IMPLEMENT THE CONTROL LOOP APPROACH AND UPDATE THE DUTY CYCLE
 
   // Control loop gain
-  Ki = .01;     // Set the integration gain constant here
+  Ki = 0.01;     // Set the integration gain constant here
 
   // Control loop calculations
   error_rpm = desired_rpm - prop_speed.rpm; // Difference between desired and measured RPM
-  duty_cycle += Ki * error_rpm;             // Integrate the factored error
+  duty_cycle = duty_cycle + Ki * error_rpm; // Integrate the factored error
 
   // Don't let the duty cycle get out of the range from 0 to 255
   if(duty_cycle < 0) {
