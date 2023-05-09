@@ -49,9 +49,6 @@ void loop() {
     desired_rpm = Serial.parseInt();     // Get the value from the user input
   }
 
-  // Set the PWM duty cycle (0-255) in the microcontroller
-  analogWrite(PWM_OUTPUT_PIN, (int)duty_cycle );
-
   // Get the propeller speed
   prop_speed = Tach.GetPropSpeed();
 
@@ -82,9 +79,13 @@ void loop() {
     duty_cycle = 0;
   }
 
+  // Set the PWM duty cycle (0-255) in the microcontroller
+  analogWrite(PWM_OUTPUT_PIN, (int)duty_cycle );
+
 // END OF CONTROL LOOP APPROACH
 // ********************************************************************************************************
 // *****************************************************************************************************
+
 }
 
 // =======================================================================================================
