@@ -52,9 +52,6 @@ void loop() {
   // Get the propeller speed
   prop_speed = Tach.GetPropSpeed();
 
-  // Output text via the serial port
-  OutputTextForSerialPlotter();   // Watch values on the Serial Plotter
-  
   // *****************************************************************************************************
   // *****************************************************************************************************
   // THIS IS WHERE YOU IMPLEMENT THE CONTROL LOOP APPROACH AND UPDATE THE DUTY CYCLE
@@ -86,6 +83,8 @@ void loop() {
 // ********************************************************************************************************
 // *****************************************************************************************************
 
+  // Output text via the serial port
+  OutputTextForSerialPlotter();   // Watch values on the Serial Plotter
 }
 
 // =======================================================================================================
