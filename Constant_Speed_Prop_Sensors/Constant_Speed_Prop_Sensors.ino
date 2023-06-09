@@ -1,8 +1,9 @@
-/* Implements closed-loop propeller speed control.
+/* Implements sensors into closed-loop propeller speed control.
 
   Start the Serial Monitor using Tools > Serial Monitor.
-  Run the program, and use the Serial Monitor to enter prop RPM values.
-  Optionally use the Serial Plotter (see comments in code below).
+  Run the program, and use the Serial Monitor to enter prop RPM values
+  and view sensor values.
+  Optionally use the Serial Plotter.
 
   W. Newhall 2/2023 (original)
 */
@@ -25,9 +26,9 @@ PropSpeed prop_speed;         // Stores RPM, blade perod, and blade frequency
 static float desired_rpm = 0; // Desired RPM (setpoint)
 static float duty_cycle = 0;  // Duty cycle for propeller motor (0-255)
 static float error_rpm = 0;   // Difference between desired RPM and measured RPM
-float vcc_V;        // Calculated VCC in volts (V)
-float vbatt_V;      // Calculated Vbatt in volts (V)
-float vsm_V;        // Calculated Vbatt in volts (V)
+float vcc_V;                  // Calculated VCC in volts (V)
+float vbatt_V;                // Calculated Vbatt in volts (V)
+float vsm_V;                  // Calculated Vbatt in volts (V)
 float temp_F;                 // Temperature sensor (F)
 
 // =======================================================================================================
@@ -131,22 +132,6 @@ bool loop_timer_expired(unsigned long loop_interval_ms) {
   return retval;
 }
 
-void GetTemperature(void) {
-  int vtemp_adc_out;  // ADC measurement of Vtemp in quantization levels
-  float vtemp_V;      // ADC measurement of Vtemp in volts (V)
-  float temp_C;       // Calculated temperature (C)
-  
-  // Read the ADC value and calculate the measured Vtemp value
-  vtemp_adc_out = analogRead(A3);             // Get the integer value from the ADC measuring Vtemp
-  vtemp_V = (float)vtemp_adc_out / 1023.0 * 1.1; // Vcca value using 10-bit ADC and 1.1V reference (V)
-  
-  // Calculate the temperature using the voltage
-  // For TMP36, offset is 0.5V, and slope is 10mV/C
-  temp_C = 100 * (vtemp_V - 0.5); // Derived from Vtemp = 0.5 + 0.01*Tc for TMP36
-  temp_F = 1.8 * temp_C + 32;     // Convert C to F
-  return;
-}
-
 void GetVoltages(void) {
   int vcca_adc_out;   // ADC measurement of Vcca in quantization levels
   float vcca_V;       // ADC measurement of Vcc in volts (V)
@@ -172,3 +157,20 @@ void GetVoltages(void) {
 
   return;
 }
+
+void GetTemperature(void) {
+  int vtemp_adc_out;  // ADC measurement of Vtemp in quantization levels
+  float vtemp_V;      // ADC measurement of Vtemp in volts (V)
+  float temp_C;       // Calculated temperature (C)
+  
+  // Read the ADC value and calculate the measured Vtemp value
+  vtemp_adc_out = analogRead(A3);             // Get the integer value from the ADC measuring Vtemp
+  vtemp_V = (float)vtemp_adc_out / 1023.0 * 1.1; // Vcca value using 10-bit ADC and 1.1V reference (V)
+  
+  // Calculate the temperature using the voltage
+  // For TMP36, offset is 0.5V, and slope is 10mV/C
+  temp_C = 100 * (vtemp_V - 0.5); // Derived from Vtemp = 0.5 + 0.01*Tc for TMP36
+  temp_F = 1.8 * temp_C + 32;     // Convert C to F
+  return;
+}
+
