@@ -1,4 +1,4 @@
-/* Reads and displays acceleration values from the LSM6DS3 accelerometers.  
+/* Reads and displays angle rate values from the LSM6DS3 gyroscopes.
 
   The Arduino Uno WiFi Rev2 has an onboard LSM6DS3.
 
@@ -17,9 +17,9 @@
 #include <Arduino_LSM6DS3.h>
 
 // Global variables used across functions
-float accel_x_g = 0;  // Acceleration in x axis (g)
-float accel_y_g = 0;  // Acceleration in y axis (g)
-float accel_z_g = 0;  // Acceleration in z axis (g)
+float angle_rate_x_degpsec = 0;  // Rate of angle around x axis (g)
+float angle_rate_y_degpsec = 0;  // Rate of angle around y axis (g)
+float angle_rate_z_degpsec = 0;  // Rate of angle around z axis (g)
 
 // =======================================================================================================
 // MAIN ARDUINO SETUP - This code runs once at startup
@@ -42,14 +42,15 @@ void setup() {
 // MAIN ARDUINO LOOP - This code runs repeatedly
 // =======================================================================================================
 void loop() {
-  if(IMU.accelerationAvailable()) { // Check if new acceleration values are available
-    IMU.readAcceleration(accel_x_g, accel_y_g, accel_z_g);  // Read accelerometer values
+  
+  if(IMU.gyroscopeAvailable()) { // Check if new gyro values are available
+    IMU.readGyroscope(angle_rate_x_degpsec, angle_rate_y_degpsec, angle_rate_z_degpsec);  // Read gyro values
   }
 
   // Outputs text to serial port for monitoring values using SERIAL PLOTTER
-  Serial.print("AccelX_g:"); Serial.print(accel_x_g); Serial.print("   ");
-  Serial.print("AccelY_g:"); Serial.print(accel_y_g); Serial.print("   ");
-  Serial.print("AccelZ_g:"); Serial.print(accel_z_g); Serial.print("   ");
+  Serial.print("AngleRateX_degpsec:"); Serial.print(angle_rate_x_degpsec); Serial.print("   ");
+  Serial.print("AngleRateY_degpsec:"); Serial.print(angle_rate_y_degpsec); Serial.print("   ");
+  Serial.print("AngleRateZ_degpsec:"); Serial.print(angle_rate_z_degpsec); Serial.print("   ");
   Serial.print("\n");
 
   delay(LOOP_TIME_INTERVAL_MS);   // Delay before looping again
