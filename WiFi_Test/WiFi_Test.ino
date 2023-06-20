@@ -4,6 +4,7 @@
   This program works with 2.4 GHz WiFi networks only (not 5 GHz).
 
   The library WiFiNINA by Arduino is required (install using IDE Library Manager).
+  See https://www.arduino.cc/reference/en/libraries/wifinina/ 
 
   W. Newhall 2/2023
 */
@@ -15,7 +16,6 @@
 #include "arduino_secrets.h" 
 
 #define SERIAL_BAUD_RATE   115200             // Set to the baud rate you want to use (e.g., 115200)
-//#define NETWORK_HOST_NAME  "arduino_testbed"  // A hostname for your Arduino on the network
 
 #include "wifi_simple.h"      // Functions for connecting to a WiFi network and printing info
 WiFiSimple wifi_simple;       // Provides functions that simplify using WiFi
@@ -25,7 +25,6 @@ WiFiSimple wifi_simple;       // Provides functions that simplify using WiFi
 // =================================================================================================
 void setup() {
   Serial.begin(SERIAL_BAUD_RATE); // Start serial communications for Serial Monitor
-  //wifi_simple.setupWifi(WIFI_SSID, WIFI_PASSWORD, NETWORK_HOST_NAME); // Connect to a WiFi network
   wifi_simple.setupWifi(WIFI_SSID, WIFI_PASSWORD);  // Connect to a WiFi network
   wifi_simple.printNetworkInfo();                   // Print information about the WiFi network
 }
