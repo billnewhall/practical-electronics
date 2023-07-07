@@ -24,8 +24,8 @@
 
 #define SERIAL_BAUD_RATE    115200                  // Set to the baud rate you want to use (e.g., 115200)
 #define MQTT_BROKER         "10.0.0.100"            // MQTT broker address (e.g., "10.0.0.100")
-#define PUBLISH_TOPIC       "/newhall/from microcontroller"  // This program will publish to this topic
-#define SUBSCRIBE_TOPIC     "/newhall/to microcontroller"    // This program will subsribe to this topic
+#define PUBLISH_TOPIC       "newhall/from-microcontroller"  // This program will publish to this topic
+#define SUBSCRIBE_TOPIC     "newhall/to-microcontroller"    // This program will subsribe to this topic
 
 #include "wifi_simple.h"      // Functions for connecting to a WiFi network and printing info
 WiFiSimple wifi_simple;       // Provides functions that simplify using WiFi

@@ -28,8 +28,8 @@
 #define NUM_PROP_BLADES     3             // Number of blades per prop
 #define SERIAL_BAUD_RATE    115200        // Baud rate for serial output (for Serial Monitor and Plotter)
 #define MQTT_BROKER         "10.0.0.100"  // MQTT broker address (e.g., "10.0.0.100")
-#define PUBLISH_TOPIC       "/newhall/from microcontroller"  // This program will publish to this topic
-#define SUBSCRIBE_TOPIC     "/newhall/to microcontroller"    // This program will subsribe to this topic
+#define PUBLISH_TOPIC       "newhall/status-report" // This program will publish to this topic
+#define SUBSCRIBE_TOPIC     "newhall/set-rpm"       // This program will subsribe to this topic
 
 // Recommend not changing these values
 #define LOOP_TIME_INTERVAL_MS     200.0   // Step time interval for control loop (200.0 recommended)
@@ -137,7 +137,7 @@ void loop() {
   GetVoltages();
   
   // Output text via the serial port
-  OutputTextForSerialPlotter();   // Get values for Serial Monitor, Serial Plotter, and MQTT message
+  CreateTextForSerialPlotter();   // Get values for Serial Monitor, Serial Plotter, and MQTT message
   Serial.println(output_text);    // Show the values on the Serial Monitor
   mqtt_simple.publish(PUBLISH_TOPIC, output_text);    // Publish the values via MQTT
 }
@@ -146,8 +146,8 @@ void loop() {
 // SUPPORTING FUNCTIONS - Recommend not changing this code
 // =======================================================================================================
 
-// Outputs text to serial port for monitoring values using SERIAL PLOTTER
-void OutputTextForSerialPlotter() {
+// Creates text for monitoring and appropriate for SERIAL PLOTTER
+void CreateTextForSerialPlotter() {
   sprintf(output_text, "");
   sprintf(field_text, "DutyCycle:%s   ", dtostrf(duty_cycle, 0, 2, val_str));
   strcat(output_text, field_text);
